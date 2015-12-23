@@ -10,24 +10,24 @@
         <div class="header">
             <div class="container">
                 <div class="row">
-                <div class="col-md-10" id="title">
+                <div class="col-md-6" id="title">
                     Enter Master
                 </div>
-                <div class="col-md-2" id="questionCounter">
+                <div class="col-md-6" id="questionCounter">
                     Question Counter
                 </div>
                 </div>
             </div>
         </div>
         <div class="answers">
-            <div class="container">
+            <div class="container" id="answersCont">
                 <div class="answerRow">
-                    <input type="text" placeholder="Ex. A">
-                    <input type="submit">
+                    <input class="currAns" id="currAns" type="text" placeholder="Ex. A">
+                    <button class="submit"> Submit </button>
                 </div>
             </div>
         </div>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="masterEntry.js"></script>
     </body>
 </html>
