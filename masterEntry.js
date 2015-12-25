@@ -6,7 +6,9 @@ var main = function () {
     $(".currAns").keypress( function(event) {
         var answer = String.fromCharCode(event.which);
         var html="<p>"+answer+"</p>";
-        answers.push(answer)
+        answers.push(answer);
+        var str=String(answers.length)+" Questions Added so far";
+        $("#questionCounter").text(str);
         $(html).appendTo("#answersCont");
         $(this).val("");
     });
