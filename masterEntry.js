@@ -3,6 +3,17 @@ var main = function () {
 
     $(".submit").click( function(){
         console.log(answers);
+        var fs = require('browserify-fs');
+        var data = JSON.stringify(answers);
+        fs.writeFile('swag.txt', 'apples');
+        fs.writeFile('./config.json', data, function(err) {
+            if (err) {
+                console.log("Error in saving");
+                console.log(err.message);
+                return;
+            }
+            console.log('Configuration saved');
+        }); 
     });
 
     $(".currAns").keypress( function(event) {
