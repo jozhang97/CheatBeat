@@ -3,16 +3,16 @@ var main = function () {
 
     $(".submit").click( function(){
         console.log(answers);
-        var fs = require('browserify-fs');
+        var fs = require('fs');
         var data = JSON.stringify(answers);
-        fs.writeFile('swag.txt', 'apples');
-        fs.writeFile('./config.json', data, function(err) {
+        var foo = fs.writeFile('swag.txt', 'apples');
+        var fooo = fs.writeFile('./config.json', data, function(err) {
             if (err) {
                 console.log("Error in saving");
                 console.log(err.message);
                 return;
             }
-            console.log('Configuration saved');
+            console.log('Configuration saved!!!');
         }); 
     });
 
