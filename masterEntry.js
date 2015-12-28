@@ -3,6 +3,8 @@ var main = function () {
 
     $(".submit").click( function(){
         console.log(answers);
+        localStorage.master = answers;
+        /**
         var fs = require('fs');
         var data = JSON.stringify(answers);
         var foo = fs.writeFile('swag.txt', 'apples');
@@ -14,6 +16,7 @@ var main = function () {
             }
             console.log('Configuration saved!!!');
         }); 
+        */
     });
 
     $(".currAns").keypress( function(event) {
