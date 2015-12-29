@@ -1,5 +1,4 @@
-/*Use Fleiss' Kappa 
-To find number of possible solutions (A,B,C?) for a given problem, first zip arrays together, use set on each array and find the size()*/
+/*Use Fleiss' Kappa*/ 
 var main = function () {
     /**$.ajax({
         url: 'results.json',
@@ -19,18 +18,20 @@ var grader = function(solutions, studentAns) {
     // returns grade student receives
     var max = solutions.length;
     var counter = 0;
-    for (i=0;i<max;i++) {
+    for (var i=0;i<max;i++) {
         if (solutions[i] == studentAns[i]){
             counter++;
         }
     }
     return 1.0*counter/max;
 };
+
 var gradeAllTests = function(solutions, students) {
     // assert solutions is an array and students is an array of student answers
     // returns array of grades
     var grades = [];
-    for (i=0;i<students.length;i++){
+    for (var i=0;i<students.length;i++)
+    {
         grades.push(grader(solutions,students[i]));
     }
     return grades
@@ -90,7 +91,6 @@ var pRandom = function pRandom (answersToEachQuestion)
         }
         amountOfThatAnswer.push(problemI);
     }
-    console.log(amountOfThatAnswer);
     var probabilities= [];
     var summer = 0;
     for (var i=0; i<amountOfThatAnswer.length;i++)
@@ -102,16 +102,77 @@ var pRandom = function pRandom (answersToEachQuestion)
         } 
         probabilities.push(1.0*summer/Math.pow(answersToEachQuestion[i].length,2));
     }
-    console.log(probabilities);
     return 1.0*sum(probabilities)/Math.pow(probabilities.length,1);
+}
+
+var removeFirstElements = function remove(arrays)
+{
+    arrays = zip(arrays);
+    arrays.shift();
+    return zip(arrays);
+}
+
+var pObserved = function pObserved (studentAnswers) 
+{
+    // returns a jadded array of observed probabilities 
+    // index i represents probabilities of same answer
+    // between ith student and 
+    // students from i+1 to end
+    // [i][j]th is the ith student's coorelation with i+j+1th student
+    var answers = removeFirstElements(studentAnswers);
+    var pObs = [];
+    var numStudents = answers.length;
+    for (var i=0;i<numStudents;i++) 
+    {
+        pObs.push(gradeAllTests(answers[i], answers.slice(i+1)));
+    }
+    return pObs;
+}
+
+var computeKappa = function kappa (pObs,pRandom)
+{
+    var numerator = pObs - pRandom;
+    if (numerator < 0) 
+    {
+        return 0;
+    }
+    var denominator = 1 - pRandom;
+    return numerator/denominator;
+}
+
+var cheaters = function cheatingCalculator(studentAns) 
+{
+    var probRandom = pRandom(zip(removeFirstElements(studentAns)));
+    var probsObs = pObserved(studentAns);
+    var suspects = [];
+    var kappas = probsObs.slice(0);    
+    for (var i=0;i<kappas.length;i++)
+    {
+        for (var j=0;j<kappas[i].length;j++)
+        {
+            kappas[i][j] = computeKappa(probsObs[i][j],probRandom);
+            if (kappas[i][j] > 0) 
+            {
+                suspects.push([kappas[i][j],studentAns[i][0],studentAns[j+i+1][0]]);
+            }
+        }
+    }
+    suspects.sort().reverse();
+    return suspects;
 }
 
 var controller = function controller () 
 {
-    var aandom = pRandom([ ["C", "A", "C", "B", "D"], ["A","C","D","B","C"] ]);
-    var andom = pRandom([ ['A','B','D','C','D'], ['B','A','D','C','B'], ['D','B','A','C','A'], ['A','B','C','D','C'], ['A','B','C','D','D'] ]);
-    return aandom;
+    var sampleAnswers = [ ['rohan', 'D','B','C','D','D','C','A'], 
+                          ['anant', 'C','B','C','D','D','C','A'],
+                          ['john', 'A','B','C','D','D','A','C'],
+                          ['SHANKAR',  'D','B','C','A','D','C','A'], 
+                           ['jeff','A','D','B','B','D','A','C']];
+    console.log(cheaters(sampleAnswers));
 }
+
+var xTest = ['a','b','c'];
+var yTest = [['a','b','c'],['b','c','a']];
 /*
 window.onload = function() {
     solutions = localStorage.master; 
@@ -120,6 +181,9 @@ window.onload = function() {
     answersToEachQuestion = zip(studentAns);
     answersToEachQuestion.shift();
     document.getElementById('solutions').innerHTML = "Solutions: " + solutions;
+    
 };
+ 
+// This method requires a big enough data set such that all multiple choice answers are answered by at least one student 
 
 $(document).ready(main);*/
