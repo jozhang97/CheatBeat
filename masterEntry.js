@@ -20,7 +20,10 @@ var main = function () {
     });
     
     $("#submitAll").click( function(){
-        //havent done this yet
+        var studentArray=JSON.parse(localStorage.students);
+        studentArray.push(answerArray[0]);
+        localStorage.setItem('students',JSON.stringify(studentArray));
+        console.log(localStorage.students);
     });
 
     $("#nextStudent").click(function(){
@@ -37,15 +40,19 @@ var main = function () {
             studentArray.push(answerArray[0]);
             localStorage.setItem('students',JSON.stringify(studentArray));
         }
-        console.log(JSON.parse(localStorage.students));
     });
     $("#currAns").keypress( function(event) {
         var answer = String.fromCharCode(event.which);
         answers.push(answer);
-        var str=String(answers.length)+" Questions Added so far";
+        if(localStorage.master == null){
+            var str=String(answers.length)+" Questions Added so far";
+        }
+        else{
+            var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
+        }
         $("#questionCounter").text(str);
         var idname='row'+(answers.length-1)
-        var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td><tr>";
+        var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td></tr>";
         $(".submittedAns").append(html)
         $(this).val("");
     });
@@ -58,7 +65,7 @@ var main = function () {
     });
 }
 var change= function(){
-    var rowNumber=$(this).index()/2;
+    var rowNumber=$(this).index();
     var idname="#row"+rowNumber;
     var newAns=window.prompt("What do you want to change it to?","");
     if (newAns!=null){
