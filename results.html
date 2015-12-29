@@ -19,19 +19,38 @@
                 <p id="solutions"> Insert solutions </p>
             </div>
             <div class = "student">
-                <div class = "row">
+                <table id="nameGrades">
+                    <thead>
+                        <tr> 
+                            <th> Name </th>
+                            <th> Grade </th>
+                        </tr>
+                    </thead>    
+                </table>    
+
+                <!-- <div class = "row">
                     <div class ="col-md-4" id="studentName">
                         Student Name  
                     </div>
                     <div class = "col-md-2" id="studentGrade">
                         Grade
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class = "cheatBeat">
             <div class = "container"> 
-                <div class = "col-md-2" id="cheaterName1">
+                <div class = "cheaters">
+                    <table id="cheaterPair">
+                        <thead>
+                            <tr> 
+                                <th colspan="2"> Names </th>
+                                <th> Probability </th>
+                            </tr>
+                        </thead>    
+                    </table>  
+                </div>
+                <!-- <div class = "col-md-2" id="cheaterName1">
                     Cheater 1
                 </div>
                 <div class = "col-md-2" id="cheaterName2">
@@ -39,7 +58,7 @@
                 </div>
                 <div class = "col-md-2" id="probability">
                     Probability
-                </div>
+                </div> -->
             </div>
         </div>
         <div class = "footer">
@@ -62,6 +81,7 @@
                 </div> -->
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="results.js"></script>
     </body>
 </html>

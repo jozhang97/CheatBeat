@@ -23,7 +23,7 @@ var grader = function(solutions, studentAns) {
             counter++;
         }
     }
-    return 1.0*counter/max;
+    return Math.round(10000.0*counter/max)/10000;
 };
 
 var gradeAllTests = function(solutions, students) {
@@ -137,7 +137,7 @@ var computeKappa = function kappa (pObs,pRandom)
         return 0;
     }
     var denominator = 1 - pRandom;
-    return numerator/denominator;
+    return Math.round(1000*numerator/denominator)/1000;
 }
 
 var cheaters = function cheatingCalculator(studentAns) 
@@ -171,19 +171,58 @@ var controller = function controller ()
     console.log(cheaters(sampleAnswers));
 }
 
-var xTest = ['a','b','c'];
-var yTest = [['a','b','c'],['b','c','a']];
-/*
-window.onload = function() {
-    solutions = localStorage.master; 
-    studentAns = localStorage.studentAns; // Array of student answers, first element is name
-        // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
-    answersToEachQuestion = zip(studentAns);
-    answersToEachQuestion.shift();
+var loadSoln = function(solutions) {
     document.getElementById('solutions').innerHTML = "Solutions: " + solutions;
-    
+}
+
+var loadGrades = function(solutions, studentAns) 
+{
+    var grades = gradeAllTests(solutions, removeFirstElements(studentAns));
+    var html = "";
+    var idname = "";
+    for (var i=0;i<grades.length;i++)
+    {
+        idname = "row" + i;
+        html = "<tr id ="+idname+"> <td id='name'>"+studentAns[i][0]+
+            "</td> <td id='grade'>"+grades[i]*100+"%</td> </tr>";
+        $("#nameGrades").append(html);
+    }
+}
+ 
+var loadCheaters = function(studentAns) {
+    var cheatingPair = cheaters(studentAns);
+    var html = '';
+    var idname = '';
+    for (var i=0;i<cheatingPair.length;i++)
+    {
+        idname = "cheatRow" +i;
+        html = "<tr id="+idname+"> <td id='cheater1'>"+cheatingPair[i][1]+
+            "</td> <td id='cheater2'>"+cheatingPair[i][2]+"</td><td id='prob'>"
+            +cheatingPair[i][0]+"</td></tr>";
+        $("#cheaterPair").append(html);
+    }
+}
+
+window.onload = function() 
+{
+    var sampleMaster = ['C','D','A','B','C','D','A'];
+    localStorage.setItem('master',JSON.stringify(sampleMaster));
+    var sampleAnswers = [ ['rohan', 'A','B','C','D','D','C','A'], 
+                      ['anant', 'C','B','C','D','D','C','A'],
+                      ['john', 'A','B','C','D','D','A','C'],
+                      ['SHANKAR',  'D','B','C','A','D','C','A'], 
+                       ['jeff','A','D','B','B','D','A','C']];
+    localStorage.setItem('studentAns',JSON.stringify(sampleAnswers));
+    solutions = JSON.parse(localStorage.master); 
+    studentAns = JSON.parse(localStorage.studentAns); 
+        // Array of student answers, first element is name
+        // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
+    loadSoln(solutions);
+    loadGrades(solutions, studentAns);
+    loadCheaters(studentAns);
 };
  
-// This method requires a big enough data set such that all multiple choice answers are answered by at least one student 
+// This method requires a big enough data set such that all 
+// multiple choice answers are answered by at least one student 
 
-$(document).ready(main);*/
+$(document).ready(main);
