@@ -7,7 +7,28 @@
         <title> StudentEntry</title>
     </head>
     <body>
+        <div class="header">
+            <div class="container">
+                <h3>Enter Student Answers</h3>
+            </div>
+        </div>
+        <div class="answers">
+            <input id="name" type="text" placeholder="Ex. John DeNero">
+            <div class="answerRow">
+                <input id="currAns" type="text" placeholder="Ex. A">
+            </div>
+            <div class="nextStep">
+                <button id="nextStudent">Enter Next Student</button>
+                <button id="submitAll">Submit</button> 
+            </div>
+            <table class="submittedAns" id="thetable">
+            </table>
+            <div id="clearButton">
+                <button>Clear Answers</button>
+            </div>
+            
+        </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="studentEntry.js"></script>
+        <script src="masterEntry.js"></script>
     </body>
 </html>

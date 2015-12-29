@@ -1,9 +1,9 @@
 var answers = [];
 var main = function () {
 
-    $(".submit").click( function(){
+    $("#submit").click( function(){
         console.log(answers);
-        localStorage.master = answers;
+        localStorage.setItem('master',JSON.stringify(answers))
         /**
         var fs = require('fs');
         var data = JSON.stringify(answers);
@@ -18,8 +18,28 @@ var main = function () {
         }); 
         */
     });
+    
+    $("#submitAll").click( function(){
+        //havent done this yet
+    });
 
-    $(".currAns").keypress( function(event) {
+    $("#nextStudent").click(function(){
+        var name=String($("#name").val());
+        var answerArray=[name];
+        answerArray.push.apply(answerArray,answers);
+        answerArray=[answerArray];
+
+        if (localStorage.students == null){
+            localStorage.setItem('students',JSON.stringify(answerArray));
+        }
+        else{
+            var studentArray=JSON.parse(localStorage.students);
+            studentArray.push(answerArray[0]);
+            localStorage.setItem('students',JSON.stringify(studentArray));
+        }
+        console.log(JSON.parse(localStorage.students));
+    });
+    $("#currAns").keypress( function(event) {
         var answer = String.fromCharCode(event.which);
         answers.push(answer);
         var str=String(answers.length)+" Questions Added so far";
@@ -30,7 +50,7 @@ var main = function () {
         $(this).val("");
     });
 
-    $(".clearButton").click( function(){
+    $("#clearButton").click( function(){
         answers=[]
         $(".submittedAns").text(String(answers));
         var str=String(answers.length)+" Questions Added so far";
