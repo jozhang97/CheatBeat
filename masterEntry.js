@@ -40,10 +40,11 @@ var main = function () {
 var change= function(){
     var rowNumber=$(this).index()/2;
     var idname="#row"+rowNumber;
-    var newAns=window.prompt("What do you want to change it to?","Ex. A");
-    answers[rowNumber]=newAns;
-    $(idname).html("<a href='#'>"+newAns+"</a>");
-    console.log(answers);
+    var newAns=window.prompt("What do you want to change it to?","");
+    if (newAns!=null){
+        answers[rowNumber]=newAns;
+        $(idname).html("<a href='#'>"+newAns+"</a>");
+    }
 }
 
 $(document).ready(main).on('click','#thetable tr', change);
