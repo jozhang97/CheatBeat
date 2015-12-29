@@ -24,7 +24,7 @@ var main = function () {
         answers.push(answer);
         var str=String(answers.length)+" Questions Added so far";
         $("#questionCounter").text(str);
-        var html="<tr class="+(answers.length-1)+"><td>"+answer+"</td><tr>";
+        var html="<tr><td><a href='#'>"+answer+"</a></td><tr>";
         $(".submittedAns").append(html)
         $(this).val("");
     });
@@ -36,4 +36,4 @@ var main = function () {
         $("#questionCounter").text(str);
     });
 }
-$(document).ready(main);
+$(document).ready(main).on('click','#thetable tr',function() {console.log($(this).index()/2)});
