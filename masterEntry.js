@@ -41,8 +41,9 @@ var main = function () {
     });
 
     $("#clearButton").click( function(){
-        answers=[]
+        answers=[];
         $(".submittedAns").text(String(answers));
+        $("#currAns").show();
         var str=String(answers.length)+" Questions Added so far";
         $("#questionCounter").text(str);
     });
