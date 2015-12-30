@@ -193,6 +193,12 @@ var loadCheaters = function(studentAns) {
     var cheatingPair = cheaters(studentAns);
     var html = '';
     var idname = '';
+    if (cheatingPair.length == 0)
+    {
+        html = "<tr id='noCheaters'> <td id='noCheating' colspan='2'> No cheating found! </td></tr>"
+        $("#cheaterPair").append(html); 
+        return;   
+    }
     for (var i=0;i<cheatingPair.length;i++)
     {
         idname = "cheatRow" +i;
@@ -205,18 +211,10 @@ var loadCheaters = function(studentAns) {
 
 window.onload = function() 
 {
-    var sampleMaster = ['C','D','A','B','C','D','A'];
-    localStorage.setItem('master',JSON.stringify(sampleMaster));
-    var sampleAnswers = [ ['rohan', 'A','B','C','D','D','C','A'], 
-                      ['anant', 'C','B','C','D','D','C','A'],
-                      ['john', 'A','B','C','D','D','A','C'],
-                      ['SHANKAR',  'D','B','C','A','D','C','A'], 
-                       ['jeff','A','D','B','B','D','A','C']];
-    localStorage.setItem('studentAns',JSON.stringify(sampleAnswers));
     solutions = JSON.parse(localStorage.master); 
-    studentAns = JSON.parse(localStorage.studentAns); 
-        // Array of student answers, first element is name
-        // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
+    studentAns = JSON.parse(localStorage.students); // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
+
+
     loadSoln(solutions);
     loadGrades(solutions, studentAns);
     loadCheaters(studentAns);
