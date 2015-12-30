@@ -213,11 +213,16 @@ window.onload = function()
 {
     solutions = JSON.parse(localStorage.master); 
     studentAns = JSON.parse(localStorage.students); // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
-
-
-    loadSoln(solutions);
-    loadGrades(solutions, studentAns);
-    loadCheaters(studentAns);
+    if (solutions.constructor===Array && studentAns.constructor===Array && studentAns[0].constructor===Array)
+    {
+        loadSoln(solutions);
+        loadGrades(solutions, studentAns);
+        loadCheaters(studentAns);
+    }
+    else 
+    {
+        alert("internal data type not compatible");
+    }
 };
  
 // This method requires a big enough data set such that all 

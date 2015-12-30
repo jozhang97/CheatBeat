@@ -67,7 +67,7 @@ var studentStoring = function()
     if (localStorage.students == null){
         localStorage.setItem('students',JSON.stringify(answerArray));
     }
-    else{
+    else{       
         var studentArray=JSON.parse(localStorage.students);
         studentArray.push(answerArray[0]);
         localStorage.setItem('students',JSON.stringify(studentArray));
