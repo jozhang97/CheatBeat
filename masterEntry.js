@@ -19,28 +19,8 @@ var main = function () {
         */
     });
     
-    $("#submitAll").click( function(){
-        var studentArray=JSON.parse(localStorage.students);
-        studentArray.push(answerArray[0]);
-        localStorage.setItem('students',JSON.stringify(studentArray));
-        console.log(localStorage.students);
-    });
-
-    $("#nextStudent").click(function(){
-        var name=String($("#name").val());
-        var answerArray=[name];
-        answerArray.push.apply(answerArray,answers);
-        answerArray=[answerArray];
-
-        if (localStorage.students == null){
-            localStorage.setItem('students',JSON.stringify(answerArray));
-        }
-        else{
-            var studentArray=JSON.parse(localStorage.students);
-            studentArray.push(answerArray[0]);
-            localStorage.setItem('students',JSON.stringify(studentArray));
-        }
-    });
+    $("#submitAll").click(studentStoring);
+    $("#nextStudent").click(studentStoring);
     $("#currAns").keypress( function(event) {
         var answer = String.fromCharCode(event.which);
         answers.push(answer);
@@ -74,6 +54,22 @@ var change= function(){
     if (newAns!=null){
         answers[rowNumber]=newAns;
         $(idname).html("<a href='#'>"+newAns+"</a>");
+    }
+}
+
+var studentStoring = function()
+{
+    var name=String($("#name").val());
+    var answerArray=[name];
+    answerArray.push.apply(answerArray,answers);
+    answerArray=[answerArray];
+    if (localStorage.students == null){
+        localStorage.setItem('students',JSON.stringify(answerArray));
+    }
+    else{
+        var studentArray=JSON.parse(localStorage.students);
+        studentArray.push(answerArray[0]);
+        localStorage.setItem('students',JSON.stringify(studentArray));
     }
 }
 
