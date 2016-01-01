@@ -22,6 +22,7 @@ var main = function () {
     $("#submitAll").click(studentStoring);
     $("#nextStudent").click(studentStoring);
     $("#currAns").keypress( function(event) {
+        // if (localStorage.master == null || (localStorage.master!= null && answers.length == JSON.parse(localStorage.master).length)
         var answer = String.fromCharCode(event.which);
         answers.push(answer);
         if(localStorage.master == null){
