@@ -21,25 +21,27 @@ var main = function () {
     
     $("#submitAll").click(studentStoring);
     $("#nextStudent").click(studentStoring);
-    $("#currAns").keypress( function(event) {
-        // if (localStorage.master == null || (localStorage.master!= null && answers.length == JSON.parse(localStorage.master).length)
-        var answer = String.fromCharCode(event.which);
-        answers.push(answer);
-        if(localStorage.master == null){
-            var str=String(answers.length)+" Questions Added so far";
-        }
-        else{
-            var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
-        }
-        $("#questionCounter").text(str);
-        var idname='row'+(answers.length-1)
-        var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td></tr>";
-        $(".submittedAns").append(html)
-        $(this).val("");
-        if(answers.length == JSON.parse(localStorage.master).length){
-            $("#currAns").hide();
-        }
-    });
+
+    if(localStorage.master == null || (JSON.parse(localStorage.master).length>answers.length)) {
+        $("#currAns").keypress( function(event) {
+            var answer = String.fromCharCode(event.which);
+            answers.push(answer);
+            if(localStorage.master == null){
+                var str=String(answers.length)+" Questions Added so far";
+            }
+            else{
+                var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
+            }
+            $("#questionCounter").text(str);
+            var idname='row'+(answers.length-1)
+            var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td></tr>";
+            $(".submittedAns").append(html)
+            $(this).val("");
+            if(answers.length == JSON.parse(localStorage.master).length){
+                $("#currAns").hide();
+            }
+        });
+    }
 
     $("#clearButton").click( function(){
         answers=[];
