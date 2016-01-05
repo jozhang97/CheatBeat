@@ -59,6 +59,9 @@ var change= function(){
         answers[rowNumber]=newAns;
         $(idname).html("<a href='#'>"+newAns+"</a>");
     }
+    else{
+        $(idname).html("<a href='#'>"+answers[rowNumber]+"</a>");
+    }
 }
 
 var studentStoring = function()
