@@ -1,0 +1,48 @@
+body {
+    background: url("https://goo.gl/6fQrLF") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+* {
+    color: black;
+    text-shadow: 1em,0,white;
+}
+
+.container {
+    text-align: center;
+}
+
+table {
+    margin: 1em;
+    color: red;
+}
+
+tr {
+    text-align: center;
+}
+
+#submit {
+    text-decoration: none;
+
+}
+
+
+tr a:hover{
+    font-size: 3em;
+    font-weight: bold;
+}
+
+a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+
+a {
+    font-size: 1em;
+    text-decoration: none;
+    color: black;
+}

@@ -37,7 +37,7 @@ var main = function () {
             var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td></tr>";
             $(".submittedAns").append(html)
             $(this).val("");
-            if(answers.length == JSON.parse(localStorage.master).length){
+            if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
                 $("#currAns").hide();
             }
         });
@@ -54,7 +54,7 @@ var main = function () {
 var change= function(){
     var rowNumber=$(this).index();
     var idname="#row"+rowNumber;
-    var newAns=window.prompt("What do you want to change it to?","");
+    var newAns=window.prompt("What do you want to change it to?");
     if (newAns!=null){
         answers[rowNumber]=newAns;
         $(idname).html("<a href='#'>"+newAns+"</a>");
