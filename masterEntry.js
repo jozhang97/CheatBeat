@@ -1,9 +1,12 @@
 var answers = [];
 var main = function () {
-
+    if (answers.length ==0) {
+        $('#clearButton').hide();
+    }
     $("#submit").click( function(){
         console.log(answers);
         localStorage.setItem('master',JSON.stringify(answers))
+        window.location.href = "studentEntry.html";
         /**
         var fs = require('fs');
         var data = JSON.stringify(answers);
@@ -15,7 +18,7 @@ var main = function () {
                 return;
             }
             console.log('Configuration saved!!!');
-        }); 
+        });
         */
     });
     
@@ -24,6 +27,7 @@ var main = function () {
 
     if(localStorage.master == null || (JSON.parse(localStorage.master).length>answers.length)) {
         $("#currAns").keypress( function(event) {
+            $("#clearButton").show();
             var answer = String.fromCharCode(event.which);
             answers.push(answer);
             if(localStorage.master == null){
@@ -34,7 +38,7 @@ var main = function () {
             }
             $("#questionCounter").text(str);
             var idname='row'+(answers.length-1)
-            var html="<tr id="+idname+"><td><a href='#'>"+answer+"</a></td></tr>";
+            var html="<tr id="+idname+"><td class='rowElements'> <a href='#'>"+answer+"</a></td></tr>";
             $(".submittedAns").append(html)
             $(this).val("");
             if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
@@ -45,6 +49,7 @@ var main = function () {
 
     $("#clearButton").click( function(){
         answers=[];
+        $("#clearButton").hide();
         $(".submittedAns").text(String(answers));
         $("#currAns").show();
         var str=String(answers.length)+" Questions Added so far";
