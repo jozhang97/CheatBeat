@@ -7,11 +7,18 @@ body {
 }
 
 #solutions {
-    color: red
+    font-size: 2em;
 }
 
-.footer {
+#foo {
     position: fixed;
+    text-align: center;
+    margin:auto;
+}
+table {
+    float:left;
+    display: inline-block;
+    margin-left: 30em;
 }
 
 h1 {
