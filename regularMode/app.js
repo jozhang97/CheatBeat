@@ -1,5 +1,6 @@
 var express = require('express');
 var path = require('path');
+var csrf = require('csurf');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -19,6 +20,8 @@ var Users = mongoose.model('Users', new Schema({
     password: String,
 }));
 
+var sessions = require('client-sessions');
+
 var app = express();
 
 // view engine setup
@@ -33,6 +36,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));//t or f
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(csrf());
+// IDK WHERE THIS GO
+// app.use(sessions({
+//     cookieName: "session",
+//     secret: "cheesetastejijiji12e12esgreat",
+//     duration: 30*60*1000, //time(ms) before cookie expires
+//     activeDuration: 5*60*1000, //extra time when do something
+//     httpOnly: true,
+//     secure: true,
+//     ephemeral: true,
+// }));
 
 app.use('/', routes);
 app.use('/login', routes);
