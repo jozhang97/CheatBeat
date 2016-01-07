@@ -1,25 +1,8 @@
 var express = require('express');
 var bcrypt = require('bcryptjs');
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var ObjectId = Schema.ObjectId;
-var User = mongoose.model('User', new Schema({
-    id: ObjectId,
-    firstName: String,
-    lastName: String, 
-    email: {type: String, unique: true},
-    password: String,
-}));
- 
- //IDK WHERE THIS GOES, SESSIONS STUFF
-var sessions = require('client-sessions');
-// app.use(sessions({
-//     cookieName: "session",
-//     secret: "cheesetastejijiji12e12esgreat",
-//     duration: 30*60*1000, //time(ms) before cookie expires
-//     activeDuration: 5*60*1000, //extra time when do something
-// add security implementations
-// }));
+
+var models = require('../models');
+var utils = require('../utils');
 
 var router = express.Router();
 
@@ -29,12 +12,12 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/register', function(req,res) {
-    res.render('register');
+    res.render('register', {csrfToken: req.csrfToken()});
 });
 
 router.post('/register', function(req,res) {
     var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
-    var user = new User(
+    var user = new models.User(
     {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -56,46 +39,35 @@ router.post('/register', function(req,res) {
 });
 
 router.get('/login', function(req,res) {
-    res.render('login');
+    res.render('login', {csrfToken: req.csrfToken()});
 });
 
 router.post('/login', function(req, res) {
-    User.findOne({email:req.body.email}, function(err, user) {
+    models.User.findOne({email:req.body.email}, function(err, user) {
         if(!user) {
-            res.render('login.jade', {error: 'Invalid user/password'})
+            res.render('login.jade', {error: 'Invalid user/password', csrfToken: req.csrfToken()});
         }
         else {
             if (bcrypt.compareSync(req.body.password, user.password)){
-            //    res.session.user = user; 
+                utils.createUserSession(req,res,user);
                 res.redirect('/dashboard');
-                console.log('passwords match');
             }
             else {
-                res.render('login.jade', {error: 'invalid user/password'})
+                res.render('login.jade', {error: 'invalid user/password', csrfToken: req.csrfToken()});
             }
         }
     });
 });
 
-router.get('/dashboard', function(req,res) {
-    if (req.session && req.session.user) {
-        User.findOne({email: req.session.user.email},
-            function(err,user) {
-            if (!user) {
-                req.sesion.reset();
-                res.redirect('/login');
-            } else {
-                res.locals.user = user; //lets us use user object in jade
-                res.render('dashboard.jade');
-            }
-        });
-    } else {
-        res.redirect('/login');
-    }
+router.get('/dashboard', utils.requireLogin,function(req,res) {
+    res.render('dashboard');
 });
 
 router.get('/logout', function(req, res) {
-    res.session.reset(); // ***
+    if (req.session)
+    {
+        req.session.reset(); // ***
+    }
     res.redirect('/');
 });
 module.exports = router;
