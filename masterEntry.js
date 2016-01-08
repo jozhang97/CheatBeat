@@ -62,10 +62,10 @@ var change= function(){
     var newAns=window.prompt("What do you want to change it to?");
     if (newAns!=null){
         answers[rowNumber]=newAns;
-        $(idname).html("<a href='#'>"+newAns+"</a>");
+        $(idname).html("<td class='rowElements'> <a href='#'>"+newAns+"</a></td>");
     }
     else{
-        $(idname).html("<a href='#'>"+answers[rowNumber]+"</a>");
+        $(idname).html("<td class='rowElements'> <a href='#'>"+answers[rowNumber]+"</a></td>");
     }
 }
 
