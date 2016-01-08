@@ -37,9 +37,15 @@ var main = function () {
                 var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
             }
             $("#questionCounter").text(str);
-            var idname='row'+(answers.length-1)
+            var idname='row'+(answers.length-1);
             var html="<tr id="+idname+"><td class='rowElements'> <a href='#'>"+answer+"</a></td></tr>";
-            $(".submittedAns").append(html)
+            if (answers.length > 5) {
+                var rowNum=(answers.length-1) % 5;
+                $("#row"+rowNum).append("<td class='rowElements'> <a href='#'>"+answer+"</a></td>");
+            }
+            else{
+                $(".submittedAns").append(html);
+            }
             $(this).val("");
             if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
                 $("#currAns").hide();
