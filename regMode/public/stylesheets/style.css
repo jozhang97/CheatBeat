@@ -1,11 +1,18 @@
 * {
-    border: black solid 1em;
 }
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+     background: url("https://goo.gl/6fQrLF") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
+input {
+   background:transparent;
+}
 a {
   color: #00B7FF;
 }

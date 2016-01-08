@@ -1,4 +1,9 @@
+var utils = require('./utils');
+utils.createApp().listen(8000);
 var express = require('express');
+var app = express();
+module.exports = app;
+/*var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -59,4 +64,4 @@ app.use(function(err, req, res, next) {
 });
 
 
-module.exports = app;
+module.exports = app;*/
