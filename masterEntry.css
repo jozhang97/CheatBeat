@@ -40,11 +40,6 @@ body {
     font-size: 2em;
 }
 
-tr a:hover{
-    font-size: 3em;
-    font-weight: bold;
-}
-
 a:hover{
     text-decoration: none;
     color: black;
