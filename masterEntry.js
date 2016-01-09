@@ -38,10 +38,10 @@ var main = function () {
             }
             $("#questionCounter").text(str);
             var idname='row'+(answers.length-1);
-            var html="<tr id="+idname+"><td class='rowElements'> <a href='#'>"+answer+"</a></td></tr>";
+            var html="<tr id="+idname+"><td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td></tr>";
             if (answers.length > 5) {
                 var rowNum=(answers.length-1) % 5;
-                $("#row"+rowNum).append("<td class='rowElements'> <a href='#'>"+answer+"</a></td>");
+                $("#row"+rowNum).append("<td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td>");
             }
             else{
                 $(".submittedAns").append(html);
@@ -62,16 +62,18 @@ var main = function () {
         $("#questionCounter").text(str);
     });
 }
-var change= function(){
-    var rowNumber=$(this).index();
-    var idname="#row"+rowNumber;
+var changed= function(){
+    var colNum=$(this).index();
+    var $tr=$(this).closest('tr');
+    var rowNum=$tr.index();
+    var idName=colNum*5+rowNum;
     var newAns=window.prompt("What do you want to change it to?");
     if (newAns!=null){
-        answers[rowNumber]=newAns;
-        $(idname).html("<td class='rowElements'> <a href='#'>"+newAns+"</a></td>");
+        answers[idName]=newAns;
+        $("#"+idName).html(" <a href='#'>"+newAns+"</a></td>");
     }
     else{
-        $(idname).html("<td class='rowElements'> <a href='#'>"+answers[rowNumber]+"</a></td>");
+        $("#"+idName).html("<a href='#'>"+answers[idName]+"</a></td>");
     }
 }
 
@@ -91,5 +93,5 @@ var studentStoring = function()
     }
 }
 
-$(document).ready(main).on('click','#thetable tr', change);
+$(document).ready(main).on('click','td', changed);
 
