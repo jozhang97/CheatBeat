@@ -41,8 +41,9 @@ module.exports.createApp = function()
 		secret: "swagload",
 		duration: 30*60*1000,
 		activeDuration: 5*60*1000,
-        secure: true,
-        ephemeral: true,
+        //HTMLOnly: true,
+        //secure: true,
+        //ephemeral: true,
 	}));
 	app.use(csrf());
 	app.use(middleware.simpleAuth);

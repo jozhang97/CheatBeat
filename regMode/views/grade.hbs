@@ -1,6 +1,6 @@
 
 <link type="text/css" rel="stylesheet" href="/stylesheets/grade.css"/>
-<h2> Grade your test now </h2>
+
 
 <div class="header">
     <div class="container">
@@ -11,8 +11,16 @@
 <div class="answers">
     <div class="container" id="answersCont">
         <div class="answerRow">
-            <input id="currAns" type="text" placeholder="Ex. A">
-            <button id="submit"><a href="#"> Submit</a> </button>
+            <form method="post" id="form">
+                <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                <input type="hidden" name="solutionKey" id="solutionKey"/>
+                <input type="testName" name="testName" required="required" placeholder="Ex. Compilers Test"/></br>
+                <input id="currAns" type="text" placeholder="Ex. A"></br>
+
+                <!-- <button id="submit"><a href="#"> Submit</a> </button> -->
+
+                <input type="submit"/>
+            </form>
         </div>
     </div>
     <table class="submittedAns" id="thetable">

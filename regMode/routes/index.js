@@ -29,6 +29,11 @@ router.post('/register', function(req,res) {
         lastName: req.body.lastName,
         email: req.body.email,
         password: hash, 
+        data: {
+            testName: [],
+            solutions: [],
+            studentAnswers: [],
+        }
     });
     user.save( function(err) {
         if (err) {
@@ -36,7 +41,7 @@ router.post('/register', function(req,res) {
             if (err.code === 11000){
                 err = "that email is already taken";
             }
-            res.render('register.jade', {title: 'Register', error: err});
+            res.render('register.hbs', {title: 'Register', error: err, csrfToken: req.csrfToken()});
         }
         else {
             res.redirect('/dashboard');
@@ -74,13 +79,53 @@ router.get('/previousGrades', function(req,res) {
 });
 
 router.get('/grade', utils.requireLogin, function(req,res) {
-    res.render('grade', {title: 'Grade'});
+    res.render('grade', {title: 'Grade', csrfToken: req.csrfToken()});
 });
 
-router.post('/grade', function(req,res)
-{
-    res.render('/', {title:"test"});
+router.post('/grade', function(req,res) {
+    var testName = req.body.testName;
+    var solutions = req.body.solutionKey;
+    models.User.findOne({email: req.session.user.email}, function(err,user)
+    {
+        if (err) 
+        {
+            console.log(err);
+            res.redirect("/dashboard", {title: "Dashboard"});
+        }
+        else 
+        {
+            // var tempData = {
+            //     testName: user.data.testName,
+            //     solutions: user.data.solutions,
+            //     studentAnswers: user.data.studentAnswers,
+            // }
+            // tempData.testName.push([testName]);
+            // tempData.solutions.push([solutions]);
+            // user.data = tempData;
+            user.data.testName.push([testName]);
+            user.data.solutions.push([solutions]);
+            user.save(function(err)
+            {
+                if(err)
+                {
+                    var error = "Something bad has happened! Try again.";
+                    res.render('grade', {title: "Grade",error:error});
+                }
+                else 
+                {
+                    console.log(user.data)
+                    res.redirect('gradeStudents');
+                }
+            });
+        }
+    });
 });
+
+router.get('/gradeStudents', function(req,res) 
+{
+    res.render('gradeStudents', {title: "Students"})
+});
+
 router.get('/potCheaters', function(req,res) {
     res.render('potCheaters');
 });

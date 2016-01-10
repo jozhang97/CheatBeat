@@ -10,8 +10,13 @@ var User = mongoose.model('User', new Schema({
 	lastName:     { type: String, required: '{PATH} is required.' },
 	email:        { type: String, required: '{PATH} is required.', unique: true },
 	password:     { type: String, required: '{PATH} is required.' },
-	data:         Object,
+	data:         {
+        testName: [String],
+        solutions: [[String]],
+        studentAnswers: [[String]],
+    } 
     // {testName, solutions, studentAnswers
+
 }));
 
 module.exports.User = User;

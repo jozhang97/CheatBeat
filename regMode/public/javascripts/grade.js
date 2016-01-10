@@ -3,7 +3,8 @@ var main = function () {
     if (answers.length ==0) {
         $('#clearButton').hide();
     }
-    $("#submit").click( function(){
+
+    //$("#submit").click( function(){
         /*
         var solutions = {
             test: testName,
@@ -24,7 +25,7 @@ var main = function () {
             console.log('Configuration saved!!!');
         });
         */
-    });
+    //});
     
     $("#submitAll").click(studentStoring);
     $("#nextStudent").click(studentStoring);
@@ -54,6 +55,7 @@ var main = function () {
             if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
                 $("#currAns").hide();
             }
+            document.getElementById("solutionKey").value = answers; 
         });
     }
 
@@ -64,6 +66,7 @@ var main = function () {
         $("#currAns").show();
         var str=String(answers.length)+" Questions Added so far";
         $("#questionCounter").text(str);
+        document.getElementById("solutionKey").value = answers; 
     });
 }
 var changed= function(){
@@ -79,6 +82,7 @@ var changed= function(){
     else{
         $("#"+idName).html("<a href='#'>"+answers[idName]+"</a></td>");
     }
+    document.getElementById("solutionKey").value = answers; 
 }
 
 var studentStoring = function()
@@ -96,6 +100,7 @@ var studentStoring = function()
         localStorage.setItem('students',JSON.stringify(studentArray));
     }
 }
+
 
 $(document).ready(main).on('click','td', changed);
 
