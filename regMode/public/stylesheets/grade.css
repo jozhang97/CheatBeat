@@ -1,0 +1,66 @@
+
+* {
+    color: black;
+    text-shadow: 1em,0,white;
+}
+
+#name {
+    text-align:center;
+    border: #9D1818 solid .05em;
+    border-radius: .5em;
+    background:transparent;
+}
+
+#currAns {
+    width: 2em;
+    height: 2em;
+    font-size: 5em;
+    text-align: center;
+    border: #9D1818 solid .05em;
+    border-radius: .5em;
+    background: transparent;
+}
+
+#currAns::-webkit-input-placeholder {
+    font-size:.5em;
+}
+.container {
+    text-align: center;
+}
+.rowElements {
+    text-align: center;
+    color: red;
+    font-size: 2em;
+}
+
+a:hover{
+    text-decoration: none;
+    color: black;
+}
+
+
+a {
+    font-size: 1em;
+    text-decoration: none;
+    color: black;
+}
+
+.rowElements a {
+    color: blue;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+#thetable {
+    width: 100%;
+    
+}
+
+button {
+    display: block;
+    margin: auto;
+    font-weight: bold;
+    border-radius: 0.5em;
+}
+
+

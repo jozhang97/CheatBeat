@@ -1,2 +1,31 @@
+
+<link type="text/css" rel="stylesheet" href="/stylesheets/grade.css"/>
 <h2> Grade your test now </h2>
 
+<div class="header">
+    <div class="container">
+        <h1>Enter Solutions</h1>
+        <h3 id="questionCounter">0 Questions Added </h3>
+    </div>
+</div>
+<div class="answers">
+    <div class="container" id="answersCont">
+        <div class="answerRow">
+            <input id="currAns" type="text" placeholder="Ex. A">
+            <button id="submit"><a href="#"> Submit</a> </button>
+        </div>
+    </div>
+    <table class="submittedAns" id="thetable">
+    </table>
+    <div id="clearButton">
+        <button id='clearAnswersButton'> Clear Answers</button>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/javascripts/grade.js"></script>
+<script> 
+    window.onload = function() 
+    {
+        localStorage.clear();
+    }
+</script>

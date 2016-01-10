@@ -11,6 +11,7 @@ var User = mongoose.model('User', new Schema({
 	email:        { type: String, required: '{PATH} is required.', unique: true },
 	password:     { type: String, required: '{PATH} is required.' },
 	data:         Object,
+    // {testName, solutions, studentAnswers
 }));
 
 module.exports.User = User;

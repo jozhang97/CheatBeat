@@ -8,7 +8,13 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  if (req.user)
+  {
+     res.render('dashboard', {title: 'Dashboard'})
+  }
+  else {
+    res.render('index', { title: 'Express' });
+  }
 });
 
 router.get('/register', function(req,res) {
@@ -67,10 +73,14 @@ router.get('/previousGrades', function(req,res) {
     res.render('previousGrades');
 });
 
-router.get('/grade', function(req,res) {
-    res.render('grade');
+router.get('/grade', utils.requireLogin, function(req,res) {
+    res.render('grade', {title: 'Grade'});
 });
 
+router.post('/grade', function(req,res)
+{
+    res.render('/', {title:"test"});
+});
 router.get('/potCheaters', function(req,res) {
     res.render('potCheaters');
 });
