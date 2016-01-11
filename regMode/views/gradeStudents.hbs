@@ -1,2 +1,41 @@
-<h1> hello world {{title}}</h1>
 <h5> {{user.data}} </h5>
+<link  type="text/css" rel = "stylesheet" href ="/stylesheets/grade.css"/> 
+
+<div class="header">
+    <div class="container">
+        <h3>Enter Student Answers</h3>
+        <h5 id="questionCounter"> 0 Questions Added So Far</h5>
+    </div>
+</div>
+<div class="answers">
+    <div class = "container">
+
+
+    <form method="post" id="form">
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+        <input type="hidden" name="solutionKey" id="solutionKey"/> <!-- Actually just student answers -->
+        <input id="name" type="text" name="name" placeholder="Ex. John DeNero">
+        <div class="answerRow">
+            <input id="currAns" type="text" placeholder="Ex. A">
+        </div>
+        <input type="hidden" id="location" name="location" type="text"/>
+        <div class="nextStep">
+
+            <!-- <button id="nextStudent"><a href="studentEntry.html">Enter Next Student</a></button> -->
+            <input id="nextStudent" type="submit" value="Enter Next Student"> </br>
+            <!-- <button id="submitAll"><a href="results.html">Submit</a></button>  -->
+            <input id="submitAll" type="submit">
+        </div>
+
+    </form>
+   
+
+    <table class="submittedAns" id="thetable">
+    </table>
+    <div id="clearButton">
+        <button>Clear Answers</button>
+    </div>
+    </div> 
+</div>
+<!-- <link  type="text/css" rel = "stylesheet" href ="/stylesheets/grade.css"/>  -->
+<script src="/javascripts/grade.js"></script>

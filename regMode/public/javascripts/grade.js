@@ -4,14 +4,10 @@ var main = function () {
         $('#clearButton').hide();
     }
 
-    //$("#submit").click( function(){
-        /*
-        var solutions = {
-            test: testName,
-            answers: answers
-        };
-
-        localStorage.setItem('master',JSON.stringify(answers))
+    $("#submit").click( function(){
+        localStorage.setItem('master',JSON.stringify(answers));
+    });
+    /*
         window.location.href = "studentEntry.html";
         var fs = require('fs');
         var data = JSON.stringify(answers);
@@ -25,10 +21,22 @@ var main = function () {
             console.log('Configuration saved!!!');
         });
         */
-    //});
     
-    $("#submitAll").click(studentStoring);
-    $("#nextStudent").click(studentStoring);
+    // $("#submitAll").click(studentStoring);
+    // $("#nextStudent").click(studentStoring);
+
+    $("#submitAll").click(function()
+    {
+        document.getElementById('location').value="results";
+        studentStoring();
+    });
+    $("#nextStudent").click(function()
+    {
+        document.getElementById('location').value="gradeStudents";
+        studentStoring();
+    });
+
+
 
     if(localStorage.master == null || (JSON.parse(localStorage.master).length>answers.length)) {
         $("#currAns").keypress( function(event) {
@@ -103,5 +111,6 @@ var studentStoring = function()
 
 
 $(document).ready(main).on('click','td', changed);
+// module.exports = answers;
 
 

@@ -1,5 +1,4 @@
 
-
 var grader = function(solutions, studentAns) {
     // assert solutions and student are arrays of the same length
     // returns grade student receives
@@ -214,3 +213,8 @@ window.onload = function()
  
 // This method requires a big enough data set such that all 
 // multiple choice answers are answered by at least one student 
+
+module.exports.loadSoln = loadSoln;
+module.exports.loadGrades = loadGrades;
+module.exports.loadCheaters = loadCheaters;
+

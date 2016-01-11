@@ -13,8 +13,14 @@ var User = mongoose.model('User', new Schema({
 	data:         {
         testName: [String],
         solutions: [[String]],
-        studentAnswers: [[String]],
-    } 
+        studentAnswers: [{
+            name: [String],
+            answers: [[String]],
+        }],
+    } ,
+    results: [Number],
+    cheat: [ [String, String, Number]],
+    
     // {testName, solutions, studentAnswers
 
 }));

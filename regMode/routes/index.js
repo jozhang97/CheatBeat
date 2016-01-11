@@ -4,6 +4,7 @@ var bcrypt = require('bcryptjs');
 var models = require('../models');
 var utils = require('../utils');
 
+var results = require('../resultsAnalysis.js');
 var router = express.Router();
 
 /* GET home page. */
@@ -32,18 +33,18 @@ router.post('/register', function(req,res) {
         data: {
             testName: [],
             solutions: [],
-            studentAnswers: [],
         }
     });
     user.save( function(err) {
         if (err) {
-            var err = "something bad happened. Try again!";
+            var error = "Something bad happened. Try again!";
             if (err.code === 11000){
-                err = "that email is already taken";
+                error = "That email is already taken. Please use another.";
             }
-            res.render('register.hbs', {title: 'Register', error: err, csrfToken: req.csrfToken()});
+            res.render('register.hbs', {title: 'Register', error: error, csrfToken: req.csrfToken()});
         }
         else {
+            req.session.user = user;
             res.redirect('/dashboard');
         }
     });
@@ -94,26 +95,17 @@ router.post('/grade', function(req,res) {
         }
         else 
         {
-            // var tempData = {
-            //     testName: user.data.testName,
-            //     solutions: user.data.solutions,
-            //     studentAnswers: user.data.studentAnswers,
-            // }
-            // tempData.testName.push([testName]);
-            // tempData.solutions.push([solutions]);
-            // user.data = tempData;
-            user.data.testName.push([testName]);
-            user.data.solutions.push([solutions]);
+            user.data.testName.push(testName);
+            user.data.solutions.push(solutions);
             user.save(function(err)
             {
                 if(err)
                 {
-                    var error = "Something bad has happened! Try again.";
+                    var error = "Something bad has happened! Please try again.";
                     res.render('grade', {title: "Grade",error:error});
                 }
                 else 
                 {
-                    console.log(user.data)
                     res.redirect('gradeStudents');
                 }
             });
@@ -121,14 +113,86 @@ router.post('/grade', function(req,res) {
     });
 });
 
-router.get('/gradeStudents', function(req,res) 
+router.get('/gradeStudents', utils.requireLogin, function(req,res) 
 {
-    res.render('gradeStudents', {title: "Students"})
+    res.render('gradeStudents', {title: "Students", csrfToken: req.csrfToken()})
+});
+
+router.post('/gradeStudents', utils.requireLogin, function(req,res)
+{
+      dataHelper(req,res,req.body.location);
+    
+});
+
+var dataHelper = function (req,res,location) 
+{
+    var name = req.body.name;
+    var studentAnswers = req.body.solutionKey;    
+    models.User.findOne({email: req.session.user.email}, function(err,user)
+    {
+        if (err) 
+        {
+            console.log(err);
+            console.log("error in finding");
+            res.redirect('gradeStudents');
+        }
+        else
+        {
+            if (user.data.studentAnswers.length < user.data.testName.length)
+            {
+                var tempData = {
+                    name: [name],
+                    answers: [studentAnswers],
+                };
+                user.data.studentAnswers.push(tempData);
+            }
+            else
+            {
+                var arraySize = user.data.testName.length;
+                user.data.studentAnswers[arraySize-1].name.push(name);
+                user.data.studentAnswers[arraySize-1].answers.push(studentAnswers);
+            }
+            user.save(function(err)
+            {
+                if(err)
+                {
+                    console.log(err);
+                    console.log("Error in saving. Try again later.");
+                    res.redirect('gradeStudents');
+                }
+                else 
+                {
+                    console.log(user.data);
+                    res.redirect(location);
+                }
+            })
+        }
+
+    });
+};
+
+router.get('/results', function(req,res)
+{
+    res.render('results', {title: "Results"
+        // , csrfToken: req.csrfToken()
+    })
 });
 
 router.get('/potCheaters', function(req,res) {
-    res.render('potCheaters');
+    // boundary conditions: one test graded, no tests graded
+    models.User.findOne({email: req.session.user.email}, function(err,user)
+    {
+        if(err) {res.redirect({error: err},"dashboard")}
+        else
+        {
+            var studentAnswers = user.data.studentAnswers;
+            var reformatted = results.converter(studentAnswers);
+            var html = results.loadCheaters(reformatted);
+            res.render('potCheaters', {title: "Cheating", tableInfo: html});
+        }
+    });
 });
+
 
 router.get('/logout', function(req, res) {
     if (req.session)
