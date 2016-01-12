@@ -88,9 +88,27 @@ router.get('/previousGrades', function(req,res) {
             var tests = user.data['testName'];
             var location = ''
             var idClick = ''
+            var test = '';
+            var testSplit = [];
             for (var i=0; i<tests.length;i++)
             {
-                html += "<tr> <a href =/previousGrades/" + tests[i] + ">" + tests[i] + "</a></tr> </br>";
+                test = tests[i]
+                testSplit = test.split(" ");
+                if(testSplit.length ==1)                
+                {    
+                    html += "<tr> <a href =/previousGrades/" + test + ">" + test + "</a></tr> </br>";
+                }
+                else
+                {
+                    test = ''
+                    for (var j=0;j<testSplit.length-1;j++)
+                    {
+                        test += testSplit[j];
+                        test += "_";
+                    }
+                    test += testSplit[testSplit.length-1];
+                    html += "<tr> <a href =/previousGrades/" + test + ">" + tests[i]+ "</a></tr> </br>";
+                }
             }
             res.render('previousGrades', {title: 'Tests', tableElements: html});
         }
@@ -103,6 +121,18 @@ router.get('/previousGrades/:id', function(req,res)
     var url = req.originalUrl;
     var urlSplit = url.split('/');
     var extension = urlSplit[urlSplit.length-1];
+    var extensionSplit = extension.split('_');
+    if (extensionSplit.length != 1)
+    {    
+        extension = '';
+        for (var i=0; i<extensionSplit.length-1;i++)
+        {
+            extension += extensionSplit[i];
+            extension += " ";
+        }
+        extension += extensionSplit[extensionSplit.length-1];
+    }
+
     models.User.findOne({email: req.session.user.email}, function(err,user)
     {
         if(err) { res.redirect({error:err}, 'previousGrades'); }
