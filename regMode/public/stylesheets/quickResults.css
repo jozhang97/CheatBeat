@@ -1,0 +1,53 @@
+body {
+    background: url("https://goo.gl/6fQrLF") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-size: 1.5em;
+    color: black; 
+}
+
+.header {
+    border-bottom: 0.125em solid black;
+    width: 90%;
+    margin: auto;
+}
+
+h1 {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    text-align: center;
+    font-weight: bold;
+}
+
+#solutions {
+    font-size: 2em;
+}
+
+#foo {
+    position: fixed;
+    text-align: center;
+    margin:auto;
+}
+
+a {
+    color: black;
+}
+
+#nameGrades {
+    margin-left:5em;
+}
+
+table {
+    float:left;
+    width:35%;
+}
+
+#cheaterPair {
+    float:right;
+    margin-right:5em;
+}
+
+.footer .container {
+    border-top: 0.125em solid black;
+}

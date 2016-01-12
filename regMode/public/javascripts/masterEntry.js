@@ -1,4 +1,5 @@
 var answers = [];
+
 var lettersNumbers = [];
 for (var i=48;i<=57;i++)
     lettersNumbers.push(i);
@@ -36,30 +37,31 @@ var main = function () {
     if(localStorage.master == null || (JSON.parse(localStorage.master).length>answers.length)) {
         $("#currAns").keypress( function(event) {
             var ew = event.which;
-            if (lettersNumbers.indexOf(ew)>=0) {
-            $("#clearButton").show();
-            var answer = String.fromCharCode(ew);
-            answers.push(answer);
-            if(localStorage.master == null){
-                var str=String(answers.length)+" Questions Added so far";
-            }
-            else{
-                var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
-            }
-            $("#questionCounter").text(str);
-            var idname='row'+(answers.length-1);
-            var html="<tr id="+idname+"><td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td></tr>";
-            if (answers.length > 5) {
-                var rowNum=(answers.length-1) % 5;
-                $("#row"+rowNum).append("<td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td>");
-            }
-            else{
-                $(".submittedAns").append(html);
-            }
-            $(this).val("");
-            if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
-                $("#currAns").hide();
-            }
+            if (lettersNumbers.indexOf(ew)>=0) 
+            {
+                $("#clearButton").show();
+                var answer = String.fromCharCode(ew);
+                answers.push(answer);
+                if(localStorage.master == null){
+                    var str=String(answers.length)+" Questions Added so far";
+                }
+                else{
+                    var str=String(answers.length)+"/"+JSON.parse(localStorage.master).length+" Questions Added so far";
+                }
+                $("#questionCounter").text(str);
+                var idname='row'+(answers.length-1);
+                var html="<tr id="+idname+"><td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td></tr>";
+                if (answers.length > 5) {
+                    var rowNum=(answers.length-1) % 5;
+                    $("#row"+rowNum).append("<td class='rowElements' id='"+(answers.length-1)+"'> <a href='#'>"+answer+"</a></td>");
+                }
+                else{
+                    $(".submittedAns").append(html);
+                }
+                $(this).val("");
+                if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
+                    $("#currAns").hide();
+                }
             }
         });
     }

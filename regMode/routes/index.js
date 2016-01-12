@@ -76,7 +76,40 @@ router.get('/dashboard', utils.requireLogin,function(req,res) {
 });
 
 router.get('/previousGrades', function(req,res) {
-    res.render('previousGrades');
+    var html = "";
+    models.User.findOne({email: req.session.user.email},function(err,user) 
+    {
+        if(err)
+        {
+            res.redirect({error:"Something went wrong. Try again later"}, 'dashboard');
+        }
+        else 
+        {
+            var tests = user.data['testName'];
+            var location = ''
+            var idClick = ''
+            for (var i=0; i<tests.length;i++)
+            {
+                location = 'previousGradesMoreInfo#' + tests[i]; // not sure if this will work
+                idClick = "id=" + tests[i] + "onClick= 'storeId(" + this.id + ")'";
+                html += "<tr> <a href =" + location + ">" + tests[i] + "</a></tr> </br>";
+            }
+            res.render('previousGrades', {title: 'Tests', tableElements: html});
+        }
+    });
+});
+
+router.post('/previousGrades', function(req,res)
+{
+
+});
+
+router.get('/previousGradesMoreInfo', function(req,res) 
+{ 
+    var html = "<tr><td>" + req.cookies+ " </td></tr>";
+    console.log("foo" + req.baseUrl);
+
+    res.render('previousGradesMoreInfo', {title: "Grades", tableElements: html});
 });
 
 router.get('/grade', utils.requireLogin, function(req,res) {
@@ -193,6 +226,21 @@ router.get('/potCheaters', function(req,res) {
     });
 });
 
+
+router.get('/masterEntry', function(req,res)
+{
+    res.render('masterEntry',{title: "QuickGrade Solutions"});
+});
+
+router.get('/studentEntry', function(req,res)
+{
+    res.render('studentEntry', {title: "QuickGrade Students"});
+});
+
+router.get('/quickResults', function(req,res)
+{
+    res.render('quickResults', {title: "QuickGrade results"});
+});
 
 router.get('/logout', function(req, res) {
     if (req.session)
