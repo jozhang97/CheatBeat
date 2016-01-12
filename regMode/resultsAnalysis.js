@@ -168,12 +168,15 @@ var loadGrades = function(solutions, studentAns)
     var grades = gradeAllTests(solutions, removeFirstElements(studentAns));
     var html = "";
     var idname = "";
+    var location = '';
     var ret = "";
     for (var i=0;i<grades.length;i++)
     {
         idname = "row" + i;
-        html = "<tr id ="+idname+"> <td id='name'>"+studentAns[i][0]+
-            "</td> <td id='grade'>"+grades[i]*100+"%</td> </tr>";
+        location = "'/previousGradesMoreInfo/" + studentAns[i][0] + "'>";
+        console.log(location);
+        html = "<tr id ="+idname+"> <td id='name'> <a href=" + location + studentAns[i][0]+
+            "</td> <td id='grade'>"+grades[i]*100+"% </a></td> </tr>";
         ret += html;
         //$("#nameGrades").append(html);
     }

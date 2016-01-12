@@ -119,20 +119,7 @@ router.get('/previousGrades', function(req,res) {
 router.get('/previousGrades/:id', function(req,res)
 {
     var url = req.originalUrl;
-    var urlSplit = url.split('/');
-    var extension = urlSplit[urlSplit.length-1];
-    var extensionSplit = extension.split('_');
-    if (extensionSplit.length != 1)
-    {    
-        extension = '';
-        for (var i=0; i<extensionSplit.length-1;i++)
-        {
-            extension += extensionSplit[i];
-            extension += " ";
-        }
-        extension += extensionSplit[extensionSplit.length-1];
-    }
-
+    var extension = extractExtension(url);
     models.User.findOne({email: req.session.user.email}, function(err,user)
     {
         if(err) { res.redirect({error:err}, 'previousGrades'); }
@@ -157,6 +144,56 @@ router.get('/previousGrades/:id', function(req,res)
                 res.render('previousGradesMoreInfo', {title: extension, tableElements: html});
                 
             }
+        }
+    });
+});
+
+var extractExtension = function(url) 
+{
+    var urlSplit = url.split('/');
+    var extension = urlSplit[urlSplit.length-1];
+    var extensionSplit = extension.split('_');
+    if (extensionSplit.length != 1)
+    {    
+        extension = '';
+        for (var i=0; i<extensionSplit.length-1;i++)
+        {
+            extension += extensionSplit[i];
+            extension += " ";
+        }
+        extension += extensionSplit[extensionSplit.length-1];
+    }
+    return extension
+}
+
+router.get('/previousGradesMoreInfo/:id', function(req,res)
+{
+    var previousUrl = req.header('Referer');
+    var testName = extractExtension(previousUrl);
+    var currUrl = req.originalUrl;
+    var studentName = extractExtension(currUrl)
+    models.User.findOne({email: req.session.user.email}, function(err,user)
+    {
+        if(err) {res.redirect({error:err}, 'previousGradesMoreInfo'); }
+        else
+        {
+            var index = user.data['testName'].indexOf(testName);
+            var solutions = user.data['solutions'][index];
+            var solutionsArray = solutions.split(',')
+            var studentInfo = user.data['studentAnswers'][index];
+            var studentIndex = studentInfo['name'].indexOf(studentName);
+            var studentAnswers = studentInfo['answers'][studentIndex];
+            var studentAnswersArray = studentAnswers.split(',');
+            var html = ''
+            for (var i=0; i<studentAnswersArray.length; i++)
+            {
+                html += "<tr>";
+                html += "<td>" + i + "</td>";
+                html += "<td>" + solutionsArray[i] + "</td>";
+                html += "<td>" + studentAnswersArray[i] + "</td>";
+                html += "</tr>";
+            }
+            res.render('previousGradesPageTwo', {title: testName, tableElements: html});
         }
     });
 });
