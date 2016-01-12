@@ -90,26 +90,45 @@ router.get('/previousGrades', function(req,res) {
             var idClick = ''
             for (var i=0; i<tests.length;i++)
             {
-                location = 'previousGradesMoreInfo#' + tests[i]; // not sure if this will work
-                idClick = "id=" + tests[i] + "onClick= 'storeId(" + this.id + ")'";
-                html += "<tr> <a href =" + location + ">" + tests[i] + "</a></tr> </br>";
+                html += "<tr> <a href =/previousGrades/" + tests[i] + ">" + tests[i] + "</a></tr> </br>";
             }
             res.render('previousGrades', {title: 'Tests', tableElements: html});
         }
     });
 });
 
-router.post('/previousGrades', function(req,res)
+// passed in the data of which test by storing the data in the url 
+router.get('/previousGrades/:id', function(req,res)
 {
-
-});
-
-router.get('/previousGradesMoreInfo', function(req,res) 
-{ 
-    var html = "<tr><td>" + req.cookies+ " </td></tr>";
-    console.log("foo" + req.baseUrl);
-
-    res.render('previousGradesMoreInfo', {title: "Grades", tableElements: html});
+    var url = req.originalUrl;
+    var urlSplit = url.split('/');
+    var extension = urlSplit[urlSplit.length-1];
+    models.User.findOne({email: req.session.user.email}, function(err,user)
+    {
+        if(err) { res.redirect({error:err}, 'previousGrades'); }
+        else 
+        {
+            var index = user.data.testName.indexOf(extension);
+            if (index < 0) { res.redirect( {error: "Try again"}, 'previousGrades'); }
+            else 
+            {
+                var solutions = user.data.solutions[index];
+                var solutionsArray = solutions.split(',');
+                var studentInfo = user.data.studentAnswers[index];
+                var studentNames = studentInfo['name'];
+                var studentAnswers = studentInfo['answers'];
+                var compiled = []; //convert data to way we want
+                for (var i=0; i<studentNames.length;i++)
+                {
+                    compiled.push([studentNames[i]]);
+                    compiled[i].push.apply(compiled[i], studentAnswers[i].split(','));
+                }
+                var html = results.loadGrades(solutionsArray, compiled)
+                res.render('previousGradesMoreInfo', {title: extension, tableElements: html});
+                
+            }
+        }
+    });
 });
 
 router.get('/grade', utils.requireLogin, function(req,res) {

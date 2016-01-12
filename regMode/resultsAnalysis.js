@@ -175,7 +175,7 @@ var loadGrades = function(solutions, studentAns)
         html = "<tr id ="+idname+"> <td id='name'>"+studentAns[i][0]+
             "</td> <td id='grade'>"+grades[i]*100+"%</td> </tr>";
         ret += html;
-        $("#nameGrades").append(html);
+        //$("#nameGrades").append(html);
     }
     return ret;
 
