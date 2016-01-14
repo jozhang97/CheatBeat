@@ -5,7 +5,7 @@ for (var i=48;i<=57;i++)
     lettersNumbers.push(i);
 for (var i=65;i<=90;i++)
     lettersNumbers.push(i);
-for (var i=97;i<=122;i++)
+for (var i=97;i<=112;i++)
     lettersNumbers.push(i);
 
 var main = function () {
@@ -15,7 +15,7 @@ var main = function () {
     $("#submit").click( function(){
         console.log(answers);
         localStorage.setItem('master',JSON.stringify(answers))
-        window.location.href = "studentEntry";
+        window.location.href = "studentEntry.html";
         /**
         var fs = require('fs');
         var data = JSON.stringify(answers);

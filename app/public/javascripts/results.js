@@ -199,11 +199,6 @@ window.onload = function()
 {
     solutions = JSON.parse(localStorage.master); 
     studentAns = JSON.parse(localStorage.students); // ex. [ ["Jeff", "A", "C"] ["Rohan", "C", "A"] ]
-    var testInformation = 
-    {
-        solutions: solutions,
-        studentAnswers: studentAns,
-    }
     if (solutions.constructor===Array && studentAns.constructor===Array && studentAns[0].constructor===Array)
     {
         loadSoln(solutions);
@@ -222,4 +217,4 @@ window.onload = function()
 module.exports.loadSoln = loadSoln;
 module.exports.loadGrades = loadGrades;
 module.exports.loadCheaters = loadCheaters;
-module.exports.testInformation = testInformation;
+

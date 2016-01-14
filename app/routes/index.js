@@ -14,7 +14,7 @@ router.get('/', function(req, res, next) {
      res.render('dashboard', {title: 'Dashboard'})
   }
   else {
-    res.render('index', { title: '' });
+    res.render('index', { title: 'Express' });
   }
 });
 
@@ -193,7 +193,7 @@ router.get('/previousGradesMoreInfo/:id', function(req,res)
                 html += "<td>" + studentAnswersArray[i] + "</td>";
                 html += "</tr>";
             }
-            res.render('previousGradesPageTwo', {title: testName+": "+studentName, tableElements: html});
+            res.render('previousGradesPageTwo', {title: testName, tableElements: html});
         }
     });
 });
@@ -326,11 +326,6 @@ router.get('/studentEntry', function(req,res)
 router.get('/quickResults', function(req,res)
 {
     res.render('quickResults', {title: "QuickGrade results"});
-});
-
-router.get('/register/quick', function(req,res)
-{
-    res.render('register', {title: 'Register'});
 });
 
 router.get('/logout', function(req, res) {
