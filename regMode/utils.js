@@ -26,7 +26,7 @@ module.exports.createUserSession = function(req,res,user)
 
 module.exports.createApp = function() 
 {
-	mongoose.connect('mongodb://localhost/authentication);
+	mongoose.connect('mongodb://localhost/authentication');
 	var app = express();
 
 	app.set('views', path.join(__dirname, 'views'));
