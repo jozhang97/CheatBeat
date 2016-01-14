@@ -26,7 +26,7 @@ module.exports.createUserSession = function(req,res,user)
 
 module.exports.createApp = function() 
 {
-	mongoose.connect('mongodb://rohan:password@ds045475.mongolab.com:45475/heroku_2b5fdv8c');
+	mongoose.connect('mongodb://<dbuser>:<dbpassword>@ds045475.mongolab.com:45475/heroku_2b5fdv8c');
 	var app = express();
 
 	app.set('views', path.join(__dirname, 'views'));
