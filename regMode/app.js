@@ -1,5 +1,4 @@
 var utils = require('./utils');
-utils.createApp().listen(8000);
 var express = require('express');
 var app = express();
 module.exports = app;
