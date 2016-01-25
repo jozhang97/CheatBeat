@@ -10,7 +10,9 @@ body {
     color: black;
     text-shadow: 1em,0,white;
 }
-
+button, #submit {
+    color: white;
+}
 #name {
     text-align:center;
     border: #9D1818 solid .05em;
