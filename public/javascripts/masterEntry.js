@@ -41,7 +41,9 @@ var main = function () {
             if (lettersNumbers.indexOf(ew)>=0) 
             {
                 $("#clearButton").show();
-                $("#submit").show();
+                if(localStorage.master == null){
+                    $("#submit").show();
+                }
                 var answer = String.fromCharCode(ew);
                 answers.push(answer);
                 if(localStorage.master == null){
@@ -63,6 +65,7 @@ var main = function () {
                 $(this).val("");
                 if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
                     $("#currAns").hide();
+                    $("#submit").show();
                 }
             }
         });
