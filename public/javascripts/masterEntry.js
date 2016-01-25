@@ -11,6 +11,7 @@ for (var i=97;i<=122;i++)
 var main = function () {
     if (answers.length ==0) {
         $('#clearButton').hide();
+        $('#submit').hide();
     }
     $("#submit").click( function(){
         console.log(answers);
@@ -40,6 +41,7 @@ var main = function () {
             if (lettersNumbers.indexOf(ew)>=0) 
             {
                 $("#clearButton").show();
+                $("#submit").show();
                 var answer = String.fromCharCode(ew);
                 answers.push(answer);
                 if(localStorage.master == null){
@@ -69,6 +71,7 @@ var main = function () {
     $("#clearButton").click( function(){
         answers=[];
         $("#clearButton").hide();
+        $('#submit').hide();
         $(".submittedAns").text(String(answers));
         $("#currAns").show();
         var str=String(answers.length)+" Questions Added so far";
