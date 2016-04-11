@@ -22,7 +22,11 @@ router.get('/register', function(req,res) {
     res.render('register', {title: 'Register', csrfToken: req.csrfToken()});
 });
 
-router.post('/register', function(req,res) {
+router.get('/register/quick', function(req,res){
+    res.render('register', {title: 'Register', csrfToken: req.csrfToken()});
+});
+
+var postHelper = function(req,res,id) {
     var hash = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     var user = new models.User(
     {
@@ -35,6 +39,10 @@ router.post('/register', function(req,res) {
             solutions: [],
         }
     });
+    if (id =="quick")
+    {
+        console.log("this part is not quite done yet");
+    }
     user.save( function(err) {
         if (err) {
             var error = "Something bad happened. Try again!";
@@ -48,6 +56,15 @@ router.post('/register', function(req,res) {
             res.redirect('/dashboard');
         }
     });
+};
+
+router.post('/register', function(req,res) {
+    postHelper(req,res, "regular");
+});
+
+router.post('/register/quick', function(req,res){
+    postHelper(req,res,"quick");
+    console.log("not updating user atm");
 });
 
 router.get('/login', function(req,res) {

@@ -11,7 +11,7 @@ for (var i=97;i<=122;i++)
 var main = function () {
     if (answers.length ==0) {
         $('#clearButton').hide();
-        $('.submit').hide();
+        $('#submit').hide();
     }
     $("#submit").click( function(){
         console.log(answers);
@@ -42,7 +42,7 @@ var main = function () {
             {
                 $("#clearButton").show();
                 if(localStorage.master == null){
-                    $(".submit").show();
+                    $("#submit").show();
                 }
                 var answer = String.fromCharCode(ew);
                 answers.push(answer);
@@ -65,7 +65,7 @@ var main = function () {
                 $(this).val("");
                 if(localStorage.master != null && answers.length == JSON.parse(localStorage.master).length){
                     $("#currAns").hide();
-                    $(".submit").show();
+                    $("#submit").show();
                 }
             }
         });
@@ -74,7 +74,7 @@ var main = function () {
     $("#clearButton").click( function(){
         answers=[];
         $("#clearButton").hide();
-        $('.submit').hide();
+        $('#submit').hide();
         $(".submittedAns").text(String(answers));
         $("#currAns").show();
         var str=String(answers.length)+" Questions Added so far";

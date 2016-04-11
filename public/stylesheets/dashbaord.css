@@ -1,8 +1,7 @@
-a 
+li 
 {
     font-size: 2em;
-    color: gray;
-    text-shadow:0.02em 0.02em white;
+    color: white;
 }
 
 #logout
